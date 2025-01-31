@@ -8,10 +8,11 @@ import { RecipeResolver } from './graphql/resolvers/recipe-resolver';
 import { UserResolver }from  './graphql/resolvers/user-resolver';
 import { CustomAuthChecker } from './graphql/guards/authenticated-guard';
 import { container } from './container/container';
+import { IngredientsResolver } from './graphql/resolvers/ingredients-resolver';
 
 async function bootstrap() {
   const schema = await buildSchema({
-    resolvers: [RecipeResolver, UserResolver],
+    resolvers: [RecipeResolver, UserResolver, IngredientsResolver],
     emitSchemaFile: path.join(__dirname, '/graphql/schema.graphql'),
     container: ({context}) => container,
     authChecker: CustomAuthChecker

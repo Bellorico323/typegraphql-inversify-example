@@ -8,11 +8,28 @@ input CreateAccountInput {
   name: String!
 }
 
+type Ingredient {
+  id: ID!
+  name: String!
+  quantity: Float!
+  recipeId: ID!
+  unity: String!
+}
+
 type Mutation {
+  addNewIngredient(data: NewIngredientInput!): Ingredient!
   addRecipe(newRecipeData: NewRecipeInput!): Recipe!
   createAccount(data: CreateAccountInput!): User!
+  removeIngredient(id: String!): String!
   removeRecipe(id: String!): String!
   singIn(email: String!): SignInResponse!
+}
+
+input NewIngredientInput {
+  name: String!
+  quantity: Float!
+  recipeId: String!
+  unity: String!
 }
 
 input NewRecipeInput {

@@ -1,10 +1,11 @@
 import { Low } from 'lowdb'
 import { JSONFile } from 'lowdb/node'
 import { Recipe } from '../graphql/dtos/models/Recipe'
+import { Ingredient } from '../graphql/dtos/models/Ingredient'
 
 interface DbProps {
   recipes: Recipe[],
-  ingredients: string[]
+  ingredients: Ingredient[]
 }
 
 const defaultData: DbProps = { recipes: [], ingredients: [] }
@@ -18,8 +19,21 @@ class Database {
   }
 
   async init() {
-    await this.db.read()
-    this.db.data ||= defaultData
+    await this.db.read() // Ler os dados atuais do JSON
+  
+    // Se o banco ainda não foi inicializado, definir como os dados padrão
+    if (!this.db.data) {
+      this.db.data = defaultData
+    } else {
+      // Adicionar apenas chaves novas, sem apagar as antigas
+      for (const key in defaultData) {
+        if (!(key in this.db.data)) {
+          (this.db.data as any)[key] = (defaultData as any)[key]
+        }
+      }
+    }
+  
+    // Escrever os dados apenas se houve alteração
     await this.db.write()
   }
 

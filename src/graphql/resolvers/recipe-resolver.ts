@@ -1,7 +1,7 @@
 import { Arg, Args, Authorized, ID, Mutation, Query, Resolver } from "type-graphql";
 import { Recipe } from "../dtos/models/Recipe";
 import { inject, injectable } from "inversify";
-import { RecipeRepository } from "../../repositories/recipe-repository";
+import { RecipeRepository } from "../../repositories/recipes-repository";
 import { RecipesArgs } from "../dtos/arguments/recipes-args";
 import { NewRecipeInput } from "../dtos/inputs/recipe-input";
 import { randomUUID } from "node:crypto";

@@ -1,6 +1,6 @@
 import { injectable } from "inversify";
 import type { Recipe } from "../graphql/dtos/models/Recipe";
-import type { RecipeRepository } from "../repositories/recipe-repository";
+import type { RecipeRepository } from "../repositories/recipes-repository";
 import { db } from "../utils/low-db";
 
 @injectable()
