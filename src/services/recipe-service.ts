@@ -1,20 +1,12 @@
 import { injectable } from "inversify";
 import type { Recipe } from "../graphql/dtos/models/Recipe";
 import type { RecipeRepository } from "../repositories/recipe-repository";
+import { db } from "../utils/low-db";
 
 @injectable()
 export class RecipeService implements RecipeRepository {
-  private recipes: Recipe[] = [
-    {
-      id: '1',
-      title: 'Recipe 1',
-      description: 'Recipe 1 description',
-      ingredients: ['ing1', 'ing2', 'ing3']
-    }
-  ]
-
   async findById(id: string): Promise<Recipe | null> {
-    const recipe = this.recipes.find((item) => item.id === id)
+    const recipe = db.data.recipes.find((item) => item.id === id)
 
     if(!recipe) {
       return null
@@ -24,18 +16,20 @@ export class RecipeService implements RecipeRepository {
   }
 
   async findAll({ skip, take }: { skip: number; take: number; }): Promise<Recipe[]> {
-    return this.recipes.slice(skip, take)
+    return db.data.recipes.slice((skip - 1), take  - 1)
   }
 
   async addNew(data: Recipe): Promise<Recipe> {
-    this.recipes.push(data)
+    db.data.recipes.push(data)
+    await db.write()
 
    return data
   }
   
   async removeById(id: string): Promise<void> {
-   const itemsWithoutRecipe = this.recipes.filter((item) => item.id !== id)
+   const itemsWithoutRecipe = db.data.recipes.filter((item) => item.id !== id)
+   db.data.recipes = [...itemsWithoutRecipe]
+   await db.write()
 
-   this.recipes = itemsWithoutRecipe
   }
 }
