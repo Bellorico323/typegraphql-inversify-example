@@ -16,6 +16,12 @@ export class IngredientService implements IngredientsRepository {
     return ingredient
   }
 
+  async findManyByRecipeId(recipeId: string): Promise<Ingredient[]> {
+    const ingredients = db.data.ingredients.filter((item) => item.recipeId === recipeId)
+
+    return ingredients
+  }
+
   async addNew(data: Ingredient): Promise<Ingredient> {
     db.data.ingredients.push(data)
     await db.write()

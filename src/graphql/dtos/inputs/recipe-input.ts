@@ -1,5 +1,6 @@
 import { MaxLength, Length, ArrayMaxSize } from "class-validator";
 import { InputType, Field } from "type-graphql";
+import { NewIngredientInput } from "./create-ingredient-input";
 
 @InputType()
 export class NewRecipeInput {
@@ -11,7 +12,6 @@ export class NewRecipeInput {
   @Length(30, 255)
   description?: string;
 
-  @Field(type => [String])
-  @ArrayMaxSize(30)
-  ingredients: string[];
+  @Field(() => [NewIngredientInput]) // Adicionamos os ingredientes na entrada
+  ingredients: NewIngredientInput[];
 }

@@ -28,13 +28,13 @@ type Mutation {
 input NewIngredientInput {
   name: String!
   quantity: Float!
-  recipeId: String!
+  recipeId: String
   unity: String!
 }
 
 input NewRecipeInput {
   description: String
-  ingredients: [String!]!
+  ingredients: [NewIngredientInput!]!
   title: String!
 }
 
@@ -46,7 +46,7 @@ type Query {
 type Recipe {
   description: String
   id: ID!
-  ingredients: [String!]!
+  ingredients: [Ingredient!]
   title: String!
 }
 

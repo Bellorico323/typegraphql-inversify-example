@@ -5,4 +5,5 @@ export interface RecipeRepository {
   findAll({skip, take}: {skip: number, take: number}): Promise<Recipe[]>
   addNew(data: Recipe): Promise<Recipe>
   removeById(id: string): Promise<void>
+  save(data: Recipe): Promise<Recipe>
 }

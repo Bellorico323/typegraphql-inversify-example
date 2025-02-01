@@ -14,6 +14,6 @@ export class NewIngredientInput {
     @Field(() => String)
     unity: string
   
-    @Field(() => String)
-    recipeId: string
+    @Field(() => String, { nullable: true })
+    recipeId?: string
 }

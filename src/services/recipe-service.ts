@@ -25,6 +25,15 @@ export class RecipeService implements RecipeRepository {
 
    return data
   }
+
+  async save(data: Recipe): Promise<Recipe> {
+    const recipeIndex = db.data.recipes.findIndex((item) => item.id === data.id)
+
+    db.data.recipes[recipeIndex] = data
+    await db.write()
+
+    return db.data.recipes[recipeIndex]
+  }
   
   async removeById(id: string): Promise<void> {
    const itemsWithoutRecipe = db.data.recipes.filter((item) => item.id !== id)
